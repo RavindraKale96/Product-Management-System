@@ -1,30 +1,34 @@
 'use strict';
 
+const { STRING } = require('sequelize');
 const { v4: uuidv4 } = require('uuid')
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Products', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: uuidv4() 
       },
-      firstName: {
+      name: {
         type: Sequelize.STRING
       },
-      lastName: {
+      description: {
         type: Sequelize.STRING
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true
+      price: {
+        type: Sequelize.FLOAT
       },
-      password: {
-        type: Sequelize.STRING
+      quantity: {
+        type: Sequelize.INTEGER
       },
-      role: {
+      images: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
+      },
+      manufacturer: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -38,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Products');
   }
 };
